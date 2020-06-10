@@ -16,7 +16,7 @@ namespace GameServer
 
             ServerStartTime = DateTime.Now;
             Console.WriteLine($"Server Start at: {ServerStartTime}");
-            ServerStartTime = ServerStartTime.AddMinutes(1);
+            ServerStartTime = ServerStartTime.AddSeconds(10);
 
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
@@ -34,6 +34,7 @@ namespace GameServer
             {
                 while (_nextLoop < DateTime.Now)
                 {
+                    ThreadManager.UpdateMain();
                     _nextLoop = _nextLoop.AddMilliseconds(Constants.MS_PER_TICK);
 
                     if (_nextLoop > DateTime.Now)

@@ -50,7 +50,7 @@ namespace GameServer
                     Console.WriteLine($"{_client.Client.RemoteEndPoint} failed to connect: Game Started!");
                     return;
                 }
-                else if (clients[i].tcp.socket == null)
+                else if ((clients[i].tcp.socket == null)&&(Program.GameStart == false))
                 {
                     clients[i].tcp.Connect(_client);
                     return;

@@ -23,6 +23,7 @@ namespace GameServer
 
         public static void PlayerMovement(int _fromClient, Packet _packet)
         {
+            int _newRow = _packet.ReadInt();
             float _newbarpos = _packet.ReadFloat();
             //Console.WriteLine("Get new Bar");
             Vector2 _newballpos = _packet.ReadVector2();
@@ -34,16 +35,17 @@ namespace GameServer
             }
             int _newpoints = _packet.ReadInt();
             bool _newalive = _packet.ReadBool();
+            bool _newballactive = _packet.ReadBool();
             if (temp == 300)
             {
-                Console.WriteLine($"newpoints = {_newpoints}");
+                Console.WriteLine($"client {_fromClient}: newpoints = {_newpoints}");
                 temp = 0;
             }
             else temp++;
             //int _newpoints = _packet.ReadInt();
             //Quaternion _rotation = _packet.ReadQuaternion();
             //Console.WriteLine($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} Set input.");
-            Server.clients[_fromClient].player.SetInput(_newbarpos, _newballpos, _newballv, _newfrzRow, _newbricks, _newpoints, _newalive); //, _rotation);
+            Server.clients[_fromClient].player.SetInput(_newRow, _newbarpos, _newballpos, _newballv, _newfrzRow, _newbricks, _newpoints, _newalive, _newballactive); //, _rotation);
         }
     }
 }

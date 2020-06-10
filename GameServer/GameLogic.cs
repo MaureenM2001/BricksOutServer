@@ -12,6 +12,7 @@ namespace GameServer
         public static int[,] SortedRanking = new int[Constants.Max_player_num,2];            
         public static List<int> AttackedList = new List<int>();
         public static int listCnt;
+        public static int temp = 0;
         public static int playercount = 0;
         
         public static void Update()
@@ -71,19 +72,34 @@ namespace GameServer
             int min = Math.Min(5, playercount);
             for (int i = 0; i < min; i++){
                 for (int j = 0; j < 2; j++){
-                    _packet.Write(SortedRanking[i,j]);
+                    _packet.Write(SortedRanking[i,j]);                    
                 }
             }
+            if (temp == 300)
+            {
+                Console.WriteLine($"Board to {localID}:");
+                for (int i = 0; i < min; i++){
+                    for (int j = 0; j < 2; j++){
+                        Console.Write($"UpdateBoard send: {SortedRanking[i,j]} ");                 
+                    }
+                    Console.WriteLine();
+                }
+                temp = 0;
+            }
+            else temp++;
+           // Console.WriteLine($"UpdateBoard playercount = {playercount}");
         }
         public static void UpdateRanking(Packet _packet, int localID)
         {
             int myranking = 0;
+            //Console.WriteLine($"UpdateRanking playercount = {playercount}");
             for (int i = 0; i < playercount; i++)
             {
                 if (SortedRanking[i,0] == localID)
                 {
                     myranking = i + 1;
                     _packet.Write(myranking);
+                    //Console.WriteLine($"UpdateRanking send: {myranking}");
                     break;
                 }
             }
@@ -101,23 +117,11 @@ namespace GameServer
                 }
             }
             _packet.Write(attackfromwho);
+           // Console.WriteLine("UpdateAttacked send: ");
+           /* for (int i = 0; i < 10; i++){
+                Console.Write($"{attackfromwho[i]} ");
+            }*/
+        //    /Console.WriteLine();
         }
     }
 }
-
-
-/*
-        public static void Update()
-        {
-            Ranking();
-            foreach (Client _client in Server.clients.Values)
-            {
-                if (_client.player != null)
-                {
-                    _client.player.Update();
-                }
-            }
-
-            ThreadManager.UpdateMain();
-        }
-*/

@@ -10,12 +10,14 @@ namespace GameServer
         //////// Client Input /////////
         public int id;
         public string username;
+        public int row;
         public float bar_position;
         public Vector2 ball_position;
         public Vector2 ball_velocity;
         public uint frzRow;
         public uint[] bricks = new uint[5];
         public bool alive;
+        public bool ballactive;
         public int points = 0;
         public int attackID = -1;
 
@@ -29,10 +31,11 @@ namespace GameServer
         private float moveSpeed = 5f / Constants.TICKS_PER_SEC;
         */
 
-        public Player(int _id, string _username, float _spawnbarpos, Vector2 _spawnballpos, Vector2 _spawnballv, uint _spawnfrzRow, uint[] _spawnbrickpos, int _spawnpoints, bool _spawnalive) //, Quaternion _rotation)
+        public Player(int _id, string _username, int _spawnrow, float _spawnbarpos, Vector2 _spawnballpos, Vector2 _spawnballv, uint _spawnfrzRow, uint[] _spawnbrickpos, int _spawnpoints, bool _spawnalive, bool _spawnballactive) //, Quaternion _rotation)
         {
             id = _id;
             username = _username;
+            row = _spawnrow;
             bar_position = _spawnbarpos;
             ball_position = _spawnballpos;
             ball_velocity = _spawnballv;
@@ -40,12 +43,14 @@ namespace GameServer
             bricks = _spawnbrickpos;
             points = _spawnpoints;
             alive = _spawnalive;
+            ballactive = _spawnballactive;
             //rotation = Quaternion.Identity;
         }
 
 
-        public void SetInput(float _newbarpos, Vector2 _newballpos, Vector2 _newballv, uint _newfrzRow, uint[] _newbrickpos, int _newpoints, bool _newalive) //, Quaternion _rotation)
+        public void SetInput(int _newrow, float _newbarpos, Vector2 _newballpos, Vector2 _newballv, uint _newfrzRow, uint[] _newbrickpos, int _newpoints, bool _newalive, bool _newballactive) //, Quaternion _rotation)
         {
+            row = _newrow;
             bar_position = _newbarpos;
             ball_position = _newballpos;
             ball_velocity = _newballv;
@@ -53,6 +58,7 @@ namespace GameServer
             bricks = _newbrickpos;
             points = _newpoints;
             alive = _newalive;
+            ballactive = _newballactive;
         }
     }
 }

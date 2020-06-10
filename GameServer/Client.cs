@@ -15,6 +15,7 @@ namespace GameServer
         public Player player;
         public TCP tcp;
         public UDP udp;
+        public int _originalRow = 0;
         public float _originalBar = 0;
         public Vector2 _originalBall = new Vector2(0, 0);
         public Vector2 _originalBallv = new Vector2(0, 0);
@@ -22,6 +23,7 @@ namespace GameServer
         public uint[] _originalBricks = new uint[Constants.BrickConst];
         public int _originalPoints = 0;
         public bool _originalAlive = true;
+        public bool _originalballactive = false;
 
 
         public Client(int _clientId)
@@ -59,6 +61,7 @@ namespace GameServer
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
 
                 ServerSend.Welcome(id, "Welcome to the server!");
+                Console.WriteLine($"Client.Connect: {id} Welcome to the server");
             }
 
             public void SendData(Packet _packet)
@@ -205,24 +208,27 @@ namespace GameServer
         public void SendIntoGame(string _playerName)
         {
             //Brick_initialize();
-            player = new Player(id, _playerName, _originalBar, _originalBall, _originalBallv, _originalfrzRow, _originalBricks, _originalPoints, _originalAlive);
+            player = new Player(id, _playerName, _originalRow, _originalBar, _originalBall, _originalBallv, _originalfrzRow, _originalBricks, _originalPoints, _originalAlive, _originalballactive);
 
-            foreach (Client _client in Server.clients.Values)
+            Console.WriteLine($"client.SendIntoGame called by {id}");
+            foreach (Client _client in Server.clients.Values) //給新加入的玩家所有玩家
             {
                 if (_client.player != null)
                 {
                     if (_client.id != id)
                     {
                         ServerSend.SpawnPlayer(id, _client.player);
+                        Console.WriteLine($"Spawn player {_client.id} to {id}");
                     }
-                }
+                }   
             }
 
-            foreach (Client _client in Server.clients.Values)
+            foreach (Client _client in Server.clients.Values) //給每個玩家新加入的玩家
             {
                 if (_client.player != null)
                 {
                     ServerSend.SpawnPlayer(_client.id, player);
+                    Console.WriteLine($"Spawn player {id} to {_client.id}");
                 }
             }
         }

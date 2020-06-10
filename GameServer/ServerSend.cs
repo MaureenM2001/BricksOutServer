@@ -65,6 +65,7 @@ namespace GameServer
             {
                 _packet.Write(_msg);
                 _packet.Write(_toClient);
+                //Console.WriteLine($"Welcome send {_msg}, {_toClient}");
 
                 SendTCPData(_toClient, _packet);
             }
@@ -76,12 +77,15 @@ namespace GameServer
             {
                 _packet.Write(_player.id);
                 _packet.Write(_player.username);
+                _packet.Write(_player.row);
                 _packet.Write(_player.bar_position);
                 _packet.Write(_player.ball_position);
                 _packet.Write(_player.ball_velocity);
                 _packet.Write(_player.frzRow);
                 _packet.Write(_player.bricks);
                 _packet.Write(_player.alive);
+                _packet.Write(_player.ballactive);
+                //Console.WriteLine($"SpawnPlayer send {_player.id}");
 
                 SendTCPData(_toClient, _packet);
             }
@@ -89,12 +93,15 @@ namespace GameServer
         public static void RemotePlayer(Packet _packet, Player _player)
         {
             _packet.Write(_player.id);
+            _packet.Write(_player.row);
             _packet.Write(_player.bar_position);
             _packet.Write(_player.ball_position);
             _packet.Write(_player.ball_velocity);
             _packet.Write(_player.frzRow);
             _packet.Write(_player.bricks);
             _packet.Write(_player.alive);
+            _packet.Write(_player.ballactive);
+            //Console.WriteLine($"RemotePlayer send {_player.id}");
 
             //SendUDPData(_toClient, _packet);
         }
@@ -125,7 +132,7 @@ namespace GameServer
             {
                 SendTCPData(_client_local.id, _packet);
             }
-            Console.WriteLine($"{_client_local.id}:SendStart Called.");
+            //Console.WriteLine($"{_client_local.id}:SendStart Called.");
         }
         #endregion
     }
