@@ -79,8 +79,8 @@ namespace GameServer
                 _packet.Write(_player.bar_position);
                 _packet.Write(_player.ball_position);
                 _packet.Write(_player.ball_velocity);
-                _packet.Write(_player.bricks);
                 _packet.Write(_player.frzRow);
+                _packet.Write(_player.bricks);
                 _packet.Write(_player.alive);
 
                 SendTCPData(_toClient, _packet);
@@ -92,8 +92,8 @@ namespace GameServer
             _packet.Write(_player.bar_position);
             _packet.Write(_player.ball_position);
             _packet.Write(_player.ball_velocity);
-            _packet.Write(_player.bricks);
             _packet.Write(_player.frzRow);
+            _packet.Write(_player.bricks);
             _packet.Write(_player.alive);
 
             //SendUDPData(_toClient, _packet);
@@ -119,91 +119,14 @@ namespace GameServer
                 SendUDPData(_client_local.id, _packet);
             }
         }
-        /*
-        public static void PlayerBarPosition(Player _player)
+        public static void SendStart(Client _client_local)
         {
-            using (Packet _packet = new Packet((int)ServerPackets.playerBarPosition))
+            using (Packet _packet = new Packet((int)ServerPackets.startGame))
             {
-                _packet.Write(_player.id);
-                _packet.Write(_player.bar_position);
-
-                SendUDPData(_packet);
+                SendTCPData(_client_local.id, _packet);
             }
+            Console.WriteLine($"{_client_local.id}:SendStart Called.");
         }
-        public static void PlayerBallPosition(Player _player)
-        {
-            using (Packet _packet = new Packet((int)ServerPackets.playerBallPosition))
-            {
-                _packet.Write(_player.id);
-                _packet.Write(_player.ball_position);
-
-                SendUDPData(_packet);
-            }
-        }
-        public static void PlayerBallVelocity(Player _player)
-        {
-            using (Packet _packet = new Packet((int)ServerPackets.playerBallVelocity))
-            {
-                _packet.Write(_player.id);
-                _packet.Write(_player.ball_velocity);
-
-                SendUDPData(_packet);
-            }
-        }
-
-        public static void PlayerBricks(Player _player)
-        {
-            using (Packet _packet = new Packet((int)ServerPackets.playerBricks))
-            {
-                _packet.Write(_player.id);
-                _packet.Write(_player.bricks);
-
-                SendUDPData(_packet);
-            }
-        }
-        public static void PlayerFreeze(Player _player)
-        {
-            using (Packet _packet = new Packet((int)ServerPackets.playerFreeze))
-            {
-                _packet.Write(_player.id);
-                _packet.Write(_player.frzRow);
-
-                SendUDPData(_packet);
-            }
-        }
-        public static void PlayerAlive(Player _player)
-        {
-            using (Packet _packet = new Packet((int)ServerPackets.playerAlive))
-            {
-                _packet.Write(_player.id);
-                _packet.Write(_player.alive);
-
-                SendUDPData(_packet);
-            }
-        }
-        /*
-        public static void PlayerPoints(Player _player)
-        {
-            using (Packet _packet = new Packet((int)ServerPackets.playerPoints))
-            {
-                _packet.Write(_player.id);
-                _packet.Write(_player.points);
-
-                SendUDPData(_packet);
-            }
-        }
-        
-        public static void PlayerRotation(Player _player)
-        {
-            using (Packet _packet = new Packet((int)ServerPackets.playerRotation))
-            {
-                _packet.Write(_player.id);
-                _packet.Write(_player.rotation);
-
-                SendUDPDataToAll(_player.id, _packet);
-            }
-        }
-        */
         #endregion
     }
 }

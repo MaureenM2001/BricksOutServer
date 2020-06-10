@@ -7,6 +7,7 @@ namespace GameServer
 {
     class ServerHandle
     {
+        private static int temp = 0;
         public static void WelcomeReceived(int _fromClient, Packet _packet)
         {
             int _clientIdCheck = _packet.ReadInt();
@@ -23,18 +24,26 @@ namespace GameServer
         public static void PlayerMovement(int _fromClient, Packet _packet)
         {
             float _newbarpos = _packet.ReadFloat();
+            //Console.WriteLine("Get new Bar");
             Vector2 _newballpos = _packet.ReadVector2();
             Vector2 _newballv = _packet.ReadVector2();
-            int[] _newbricks = new int[Constants.BrickConst];
+            uint[] _newbricks = new uint[Constants.BrickConst];
+            uint _newfrzRow = _packet.ReadUInt();
             for (int i = 0; i < Constants.BrickConst; i++){
-                _newbricks[i] =  _packet.ReadInt();
+                _newbricks[i] =  _packet.ReadUInt();
             }
-            int _newfrzRow = _packet.ReadInt();
+            int _newpoints = _packet.ReadInt();
             bool _newalive = _packet.ReadBool();
+            if (temp == 300)
+            {
+                Console.WriteLine($"newpoints = {_newpoints}");
+                temp = 0;
+            }
+            else temp++;
             //int _newpoints = _packet.ReadInt();
             //Quaternion _rotation = _packet.ReadQuaternion();
-
-            Server.clients[_fromClient].player.SetInput(_newbarpos, _newballpos, _newballv, _newbricks, _newfrzRow, _newalive); //, _rotation);
+            //Console.WriteLine($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} Set input.");
+            Server.clients[_fromClient].player.SetInput(_newbarpos, _newballpos, _newballv, _newfrzRow, _newbricks, _newpoints, _newalive); //, _rotation);
         }
     }
 }

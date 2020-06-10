@@ -15,11 +15,12 @@ namespace GameServer
         public Player player;
         public TCP tcp;
         public UDP udp;
-        public float _originalBar;
+        public float _originalBar = 0;
         public Vector2 _originalBall = new Vector2(0, 0);
         public Vector2 _originalBallv = new Vector2(0, 0);
-        public int[] _originalBricks = new int[Constants.BrickConst];
-        public int _originalfrzRow;
+        public uint _originalfrzRow = 0;
+        public uint[] _originalBricks = new uint[Constants.BrickConst];
+        public int _originalPoints = 0;
         public bool _originalAlive = true;
 
 
@@ -204,7 +205,7 @@ namespace GameServer
         public void SendIntoGame(string _playerName)
         {
             //Brick_initialize();
-            player = new Player(id, _playerName, _originalBar, _originalBall, _originalBallv, _originalBricks, _originalfrzRow, _originalAlive);
+            player = new Player(id, _playerName, _originalBar, _originalBall, _originalBallv, _originalfrzRow, _originalBricks, _originalPoints, _originalAlive);
 
             foreach (Client _client in Server.clients.Values)
             {

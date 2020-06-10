@@ -18,6 +18,7 @@ namespace GameServer
 
         private static TcpListener tcpListener;
         private static UdpClient udpListener;
+        
 
         public static void Start(int _maxPlayers, int _port)
         {
@@ -27,7 +28,7 @@ namespace GameServer
             Console.WriteLine("Starting server...");
             InitializeServerData();
 
-            tcpListener = new TcpListener(IPAddress.Any, Port);
+            tcpListener = new TcpListener(IPAddress.Parse(Constants.serverIPaddress), Port);
             tcpListener.Start();
             tcpListener.BeginAcceptTcpClient(TCPConnectCallback, null);
 
@@ -45,7 +46,11 @@ namespace GameServer
 
             for (int i = 1; i <= MaxPlayers; i++)
             {
-                if (clients[i].tcp.socket == null)
+                if (Program.GameStart == true){
+                    Console.WriteLine($"{_client.Client.RemoteEndPoint} failed to connect: Game Started!");
+                    return;
+                }
+                else if (clients[i].tcp.socket == null)
                 {
                     clients[i].tcp.Connect(_client);
                     return;
@@ -57,6 +62,7 @@ namespace GameServer
 
         private static void UDPReceiveCallback(IAsyncResult _result)
         {
+            //Console.WriteLine("UDPReceivedCallback Called.");
             try
             {
                 IPEndPoint _clientEndPoint = new IPEndPoint(IPAddress.Any, 0);
@@ -116,7 +122,7 @@ namespace GameServer
             {
                 clients.Add(i, new Client(i));
             }
-
+            
             packetHandlers = new Dictionary<int, PacketHandler>()
             {
                 { (int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },

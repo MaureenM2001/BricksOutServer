@@ -14,5 +14,6 @@ namespace GameServer
         public const int column = 8;
         public const int row_start = 11;
         public const int row_end = 20;
+        public const string serverIPaddress = "192.168.43.12";
     }
 }

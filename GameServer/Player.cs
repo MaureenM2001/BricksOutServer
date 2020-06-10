@@ -13,11 +13,11 @@ namespace GameServer
         public float bar_position;
         public Vector2 ball_position;
         public Vector2 ball_velocity;
-        public int[] bricks = new int[5];
-        public int frzRow;
+        public uint frzRow;
+        public uint[] bricks = new uint[5];
         public bool alive;
-        public int points;
-        public int attackID;
+        public int points = 0;
+        public int attackID = -1;
 
         //////// Not Using /////////
         /*        
@@ -29,41 +29,29 @@ namespace GameServer
         private float moveSpeed = 5f / Constants.TICKS_PER_SEC;
         */
 
-        public Player(int _id, string _username, float _spawnbarpos, Vector2 _spawnballpos, Vector2 _spawnballv, int[] _spawnbrickpos, int _spawnfrzRow, bool _spawnalive) //, Quaternion _rotation)
+        public Player(int _id, string _username, float _spawnbarpos, Vector2 _spawnballpos, Vector2 _spawnballv, uint _spawnfrzRow, uint[] _spawnbrickpos, int _spawnpoints, bool _spawnalive) //, Quaternion _rotation)
         {
             id = _id;
             username = _username;
             bar_position = _spawnbarpos;
             ball_position = _spawnballpos;
             ball_velocity = _spawnballv;
-            bricks = _spawnbrickpos;
             frzRow = _spawnfrzRow;
+            bricks = _spawnbrickpos;
+            points = _spawnpoints;
             alive = _spawnalive;
             //rotation = Quaternion.Identity;
         }
 
-        /*
-        public void Update()
-        {
-            ServerSend.RemotePlayer(this);
-            /*
-            ServerSend.PlayerBarPosition(this);
-            ServerSend.PlayerBallPosition(this);
-            ServerSend.PlayerBallVelocity(this);
-            ServerSend.PlayerBricks(this);
-            ServerSend.PlayerFreeze(this);
-            ServerSend.PlayerAlive(this);
-            
-        }*/
 
-
-        public void SetInput(float _newbarpos, Vector2 _newballpos, Vector2 _newballv, int[] _newbrickpos, int _newfrzRow, bool _newalive) //, Quaternion _rotation)
+        public void SetInput(float _newbarpos, Vector2 _newballpos, Vector2 _newballv, uint _newfrzRow, uint[] _newbrickpos, int _newpoints, bool _newalive) //, Quaternion _rotation)
         {
             bar_position = _newbarpos;
             ball_position = _newballpos;
             ball_velocity = _newballv;
-            bricks = _newbrickpos;
             frzRow = _newfrzRow;
+            bricks = _newbrickpos;
+            points = _newpoints;
             alive = _newalive;
         }
     }

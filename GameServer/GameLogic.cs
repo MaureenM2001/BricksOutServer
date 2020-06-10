@@ -11,12 +11,14 @@ namespace GameServer
         public static Dictionary<int, int> ranking = new Dictionary<int, int>();
         public static int[,] SortedRanking = new int[Constants.Max_player_num,2];            
         public static List<int> AttackedList = new List<int>();
+        public static int listCnt;
+        public static int playercount = 0;
         
         public static void Update()
         {
-            Ranking(); // Get all clients' data and count ranking
+            Ranking(); // Get all clients' data and count ranking // 跑完ranking
 
-            foreach (Client _client_local in Server.clients.Values)
+            foreach (Client _client_local in Server.clients.Values) // 送每個人的包裹
             {
                 Attack(_client_local.id);  // Get all clients' data and make attack list
                 
@@ -28,7 +30,8 @@ namespace GameServer
 
         public static void Ranking()
         {
-            foreach (Client _client in Server.clients.Values)
+            ranking.Clear();
+            foreach (Client _client in Server.clients.Values) 
             {
                 if (_client.player != null)
                 {
@@ -37,11 +40,13 @@ namespace GameServer
             }
             //SortedRanking.Clear();
             int count = 0;
+            playercount = 0;
             foreach (KeyValuePair<int, int> author in ranking.OrderByDescending(key => key.Value))  
             {  
                 SortedRanking[count,0] = author.Key;
                 SortedRanking[count,1] = author.Value;
                 count++;
+                playercount++;
                 //Console.WriteLine("Key: {0}, Value: {1}", author.Key, author.Value);  
             }  
         }
@@ -49,11 +54,13 @@ namespace GameServer
         public static void Attack(int localID)
         {
             AttackedList.Clear();
+            listCnt = 0;
             foreach (Client _client in Server.clients.Values)
             {
                 if ((_client.player != null)&&(_client.player.attackID == localID))
                 {
                     AttackedList.Add(_client.id);
+                    listCnt++;
                 }
             }
             AttackedList.Sort();
@@ -61,7 +68,8 @@ namespace GameServer
 
         public static void UpdateBoard(Packet _packet, int localID)
         {
-            for (int i = 0; i < 5; i++){
+            int min = Math.Min(5, playercount);
+            for (int i = 0; i < min; i++){
                 for (int j = 0; j < 2; j++){
                     _packet.Write(SortedRanking[i,j]);
                 }
@@ -70,7 +78,7 @@ namespace GameServer
         public static void UpdateRanking(Packet _packet, int localID)
         {
             int myranking = 0;
-            for (int i = 0; i < Constants.Max_player_num; i++)
+            for (int i = 0; i < playercount; i++)
             {
                 if (SortedRanking[i,0] == localID)
                 {
@@ -84,7 +92,7 @@ namespace GameServer
         {
             bool[] attackfromwho = new bool[10];
             int j = 0;
-            for (int i = 1; i < Constants.Max_player_num; i++)
+            for (int i = 1; i <= Constants.Max_player_num&&j < listCnt; i++)
             {
                 if (i == AttackedList[j]) // i = id
                 {
