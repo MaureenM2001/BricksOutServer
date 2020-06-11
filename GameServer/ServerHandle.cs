@@ -37,12 +37,15 @@ namespace GameServer
             int _newpoints = _packet.ReadInt();
             bool _newalive = _packet.ReadBool();
             bool _newballactive = _packet.ReadBool();
-            if (temp == 300)
+            /*if (temp == 30)
             {
                 Console.WriteLine($"client {_fromClient}: newpoints = {_newpoints}");
+                //if (_newalive == false) {
+                Console.WriteLine($"client {_fromClient}: {_newalive}");
+                //}
                 temp = 0;
             }
-            else temp++;
+            else temp++;*/
             //int _newpoints = _packet.ReadInt();
             //Quaternion _rotation = _packet.ReadQuaternion();
             //Console.WriteLine($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} Set input.");

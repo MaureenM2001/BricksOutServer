@@ -75,7 +75,7 @@ namespace GameServer
                     _packet.Write(SortedRanking[i,j]);                    
                 }
             }
-            if (temp == 300)
+           /* if (temp == 300)
             {
                 Console.WriteLine($"Board to {localID}:");
                 for (int i = 0; i < min; i++){
@@ -86,7 +86,7 @@ namespace GameServer
                 }
                 temp = 0;
             }
-            else temp++;
+            else temp++;*/
            // Console.WriteLine($"UpdateBoard playercount = {playercount}");
         }
         public static void UpdateRanking(Packet _packet, int localID)
