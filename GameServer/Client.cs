@@ -21,6 +21,7 @@ namespace GameServer
         public Vector2 _originalBallv = new Vector2(0, 0);
         public uint _originalfrzRow = 0;
         public uint[] _originalBricks = new uint[Constants.BrickConst];
+        public int _originalAttack = 0;
         public int _originalPoints = 0;
         public bool _originalAlive = true;
         public bool _originalballactive = false;
@@ -208,7 +209,7 @@ namespace GameServer
         public void SendIntoGame(string _playerName)
         {
             //Brick_initialize();
-            player = new Player(id, _playerName, _originalRow, _originalBar, _originalBall, _originalBallv, _originalfrzRow, _originalBricks, _originalPoints, _originalAlive, _originalballactive);
+            player = new Player(id, _playerName, _originalRow, _originalBar, _originalBall, _originalBallv, _originalfrzRow, _originalBricks, _originalAttack, _originalPoints, _originalAlive, _originalballactive);
 
             Console.WriteLine($"client.SendIntoGame called by {id}");
             foreach (Client _client in Server.clients.Values) //給新加入的玩家所有玩家

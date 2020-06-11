@@ -33,6 +33,7 @@ namespace GameServer
             for (int i = 0; i < Constants.BrickConst; i++){
                 _newbricks[i] =  _packet.ReadUInt();
             }
+            int _newattack = _packet.ReadInt();
             int _newpoints = _packet.ReadInt();
             bool _newalive = _packet.ReadBool();
             bool _newballactive = _packet.ReadBool();
@@ -45,7 +46,7 @@ namespace GameServer
             //int _newpoints = _packet.ReadInt();
             //Quaternion _rotation = _packet.ReadQuaternion();
             //Console.WriteLine($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} Set input.");
-            Server.clients[_fromClient].player.SetInput(_newRow, _newbarpos, _newballpos, _newballv, _newfrzRow, _newbricks, _newpoints, _newalive, _newballactive); //, _rotation);
+            Server.clients[_fromClient].player.SetInput(_newRow, _newbarpos, _newballpos, _newballv, _newfrzRow, _newbricks, _newattack, _newpoints, _newalive, _newballactive); //, _rotation);
         }
     }
 }

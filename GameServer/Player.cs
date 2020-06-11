@@ -19,7 +19,7 @@ namespace GameServer
         public bool alive;
         public bool ballactive;
         public int points = 0;
-        public int attackID = -1;
+        public int attackID = 0;
 
         //////// Not Using /////////
         /*        
@@ -31,7 +31,7 @@ namespace GameServer
         private float moveSpeed = 5f / Constants.TICKS_PER_SEC;
         */
 
-        public Player(int _id, string _username, int _spawnrow, float _spawnbarpos, Vector2 _spawnballpos, Vector2 _spawnballv, uint _spawnfrzRow, uint[] _spawnbrickpos, int _spawnpoints, bool _spawnalive, bool _spawnballactive) //, Quaternion _rotation)
+        public Player(int _id, string _username, int _spawnrow, float _spawnbarpos, Vector2 _spawnballpos, Vector2 _spawnballv, uint _spawnfrzRow, uint[] _spawnbrickpos, int _spawnattack, int _spawnpoints, bool _spawnalive, bool _spawnballactive) //, Quaternion _rotation)
         {
             id = _id;
             username = _username;
@@ -41,6 +41,7 @@ namespace GameServer
             ball_velocity = _spawnballv;
             frzRow = _spawnfrzRow;
             bricks = _spawnbrickpos;
+            attackID = _spawnattack;
             points = _spawnpoints;
             alive = _spawnalive;
             ballactive = _spawnballactive;
@@ -48,7 +49,7 @@ namespace GameServer
         }
 
 
-        public void SetInput(int _newrow, float _newbarpos, Vector2 _newballpos, Vector2 _newballv, uint _newfrzRow, uint[] _newbrickpos, int _newpoints, bool _newalive, bool _newballactive) //, Quaternion _rotation)
+        public void SetInput(int _newrow, float _newbarpos, Vector2 _newballpos, Vector2 _newballv, uint _newfrzRow, uint[] _newbrickpos, int _newattack, int _newpoints, bool _newalive, bool _newballactive) //, Quaternion _rotation)
         {
             row = _newrow;
             bar_position = _newbarpos;
@@ -56,6 +57,7 @@ namespace GameServer
             ball_velocity = _newballv;
             frzRow = _newfrzRow;
             bricks = _newbrickpos;
+            attackID = _newattack;
             points = _newpoints;
             alive = _newalive;
             ballactive = _newballactive;

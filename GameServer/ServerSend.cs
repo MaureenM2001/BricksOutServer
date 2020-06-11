@@ -83,6 +83,8 @@ namespace GameServer
                 _packet.Write(_player.ball_velocity);
                 _packet.Write(_player.frzRow);
                 _packet.Write(_player.bricks);
+                _packet.Write(_player.attackID);
+                _packet.Write(_player.points);
                 _packet.Write(_player.alive);
                 _packet.Write(_player.ballactive);
                 //Console.WriteLine($"SpawnPlayer send {_player.id}");

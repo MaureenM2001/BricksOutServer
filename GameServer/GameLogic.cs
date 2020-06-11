@@ -114,6 +114,7 @@ namespace GameServer
                 {
                     attackfromwho[i-1] = true;
                     j++;
+                    Console.WriteLine($"{localID} be attacked by {i}");
                 }
             }
             _packet.Write(attackfromwho);
