@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 
 namespace GameServer
@@ -14,10 +14,10 @@ namespace GameServer
         {
             Console.Title = "Game Server";
             isRunning = true;
-/*
+
             ServerStartTime = DateTime.Now;
             Console.WriteLine($"Server Start at: {ServerStartTime}");
-            ServerStartTime = ServerStartTime.AddSeconds(30);*/
+            ServerStartTime = ServerStartTime.AddSeconds(30);
 
             Thread mainThread = new Thread(new ThreadStart(MainThread));
             mainThread.Start();
@@ -29,7 +29,10 @@ namespace GameServer
             Console.WriteLine($"Main thread started. Running at {Constants.TICKS_PER_SEC} ticks per second.");
             DateTime _nextLoop = DateTime.Now;
 
-            while ((isRunning)&&(!GameStart))
+            Console.WriteLine($"ServerStartTime: {ServerStartTime}");
+            Console.WriteLine($"NowTime: {DateTime.Now}");
+
+            while ((isRunning)&&(!GameStart)&&(ServerStartTime > DateTime.Now))
             {
                 while (_nextLoop < DateTime.Now)
                 {
@@ -42,7 +45,7 @@ namespace GameServer
                     }
                 }
             }
-            if (GameStart && !AskStart){
+            if (!AskStart){
                 Console.WriteLine("Game Start.");
                 foreach (Client _client_local in Server.clients.Values) // 送每個人的包裹
                 {
